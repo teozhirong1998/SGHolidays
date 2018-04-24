@@ -7,9 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,7 @@ public class SecondActivity extends AppCompatActivity {
 
     ListView lv;
     TextView tvCategory;
+    Button btnBack;
     ArrayAdapter aa;
     ArrayList<Holiday> holiday;
 
@@ -26,7 +30,7 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         holiday = new ArrayList<Holiday>();
-
+        btnBack = (Button)findViewById(R.id.btnBack);
         lv = (ListView) this.findViewById(R.id.lvHolidays);
         tvCategory = (TextView) findViewById(R.id.tvCategory);
 
@@ -51,6 +55,23 @@ public class SecondActivity extends AppCompatActivity {
 
         aa = new HolidayAdapter(this, R.layout.row, holiday);
         lv.setAdapter(aa);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Holiday selectedHoliday = holiday.get(position);
+                Toast.makeText(SecondActivity.this, selectedHoliday.getName()
+                                + " Date: " + selectedHoliday.getDate(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }
