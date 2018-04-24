@@ -1,0 +1,56 @@
+package com.example.a16022635.sgholidays;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+public class SecondActivity extends AppCompatActivity {
+
+    ListView lv;
+    TextView tvCategory;
+    ArrayAdapter aa;
+    ArrayList<Holiday> holiday;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        holiday = new ArrayList<Holiday>();
+
+        lv = (ListView) this.findViewById(R.id.lvHolidays);
+        tvCategory = (TextView) findViewById(R.id.tvCategory);
+
+        Intent i = getIntent();
+        String category = i.getStringExtra("category");
+        tvCategory.setText(category);
+
+        if (category.equalsIgnoreCase("Secular")) {
+            holiday.add(new Holiday("New Year's Day", "1 January 2018"));
+            holiday.add(new Holiday("Good Friday", "30 March 2018"));
+            holiday.add(new Holiday("Labour Day", "1 May 2018"));
+            holiday.add(new Holiday("National Day", "9 August 2018"));
+
+        } else if (category.equalsIgnoreCase("Ethnics and Religion")){
+            holiday.add(new Holiday("Chinese New Year", "16-17 February 2018"));
+            holiday.add(new Holiday("Vesak day", "29 May 2018"));
+            holiday.add(new Holiday("Hari Raya Puasa", "15 June 2018"));
+            holiday.add(new Holiday("Hari Raya Haji", "22 August 2018"));
+            holiday.add(new Holiday("Deepavali", "6 November 2018"));
+            holiday.add(new Holiday("Christmas Day", "25 December 2018"));
+        }
+
+        aa = new HolidayAdapter(this, R.layout.row, holiday);
+        lv.setAdapter(aa);
+    }
+
+}
